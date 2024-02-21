@@ -8,12 +8,12 @@ interface Message {
   text: string;
 }
 
-const simulateAIResponse = async (userMessage: string): Promise<string> => {
+const getAIResponse = async (userMessage: string): Promise<string> => {
   // Make the GET request with fetch
   const response = await fetch('/api/?query=' + userMessage);
-  console.log("res : ", response) 
-  const jsonData = await response.json();
-  return JSON.parse(JSON.stringify(jsonData))['text'];
+  console.log("res : ", response)
+  const aiResponse = await response.json();
+  return aiResponse;
 };
 
 
@@ -29,11 +29,16 @@ export default function Home() {
     const updatedMessages = [...messages, { id: messages.length + 1, sender: 'User', text: newMessage }];
     setMessages(updatedMessages);
     setWaitingForAI(true)
-
     setNewMessage('');
-    const aiResponse = await simulateAIResponse(newMessage);
-    const updatedMessagesWithAIResponse = [...updatedMessages, { id: updatedMessages.length + 1, sender: 'AI', text: aiResponse }];
+
+    const aiResponse = await getAIResponse(newMessage);
+    const updatedMessagesWithAIResponse = [...updatedMessages, { 
+      id: updatedMessages.length + 1, 
+      sender: 'AI', 
+      text: aiResponse 
+    }];
     setMessages(updatedMessagesWithAIResponse);
+
     setWaitingForAI(false)
 
   };
@@ -52,6 +57,17 @@ export default function Home() {
                 <img src='/1484.gif'></img>
               </div>
             )}
+        </>
+        <>
+          {messages.length == 0 &&
+            (
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                  <img style={{ width: "25%", marginBottom: "2%" }} src='/MongoDB_White.svg' />
+                  <span style={{marginBottom: '2%', fontSize: '40px', justifySelf:'center' }}>+</span>
+                  <img style={{ width: "8%", marginBottom: "2%" }} src='/openAI.svg' />
+                </div>
+            )
+          }
         </>
         <div className="pr-4 messages" style={{ minWidth: '100%', display: 'table' }}>
           {messages.map((message) => (
@@ -79,7 +95,7 @@ export default function Home() {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               className="flex h-10 w-full rounded-md border border-[#e5e7eb] px-3 py-2 text-sm placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#9ca3af] disabled:cursor-not-allowed disabled:opacity-50 text-[#030712] focus-visible:ring-offset-2"
-              placeholder="Type your message"
+              placeholder="Ask what you have in mind"
             />
             <button
               type="submit"

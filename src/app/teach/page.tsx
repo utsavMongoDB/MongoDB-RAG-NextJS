@@ -2,7 +2,6 @@
 
 import { FilePond } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
-import { useState } from 'react';
 import NavBar from '../component/navbar';
 
 export default function Home() {
@@ -15,5 +14,6 @@ export default function Home() {
                 />
             </div>
         </main>
+
     );
 }

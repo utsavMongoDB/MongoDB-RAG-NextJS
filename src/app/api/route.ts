@@ -7,18 +7,9 @@ import { CharacterTextSplitter } from 'langchain/text_splitter';
 import { ConversationalRetrievalQAChain } from 'langchain/chains';
 import { ChatOpenAI } from '@langchain/openai';
 import { BufferWindowMemory } from 'langchain/memory';
+import { AIMessage, HumanMessage } from 'langchain/schema';
 
-const formatChatHistory = (
-  human: string | null,
-  ai: string ,
-  previousChatHistory?: string
-) => {
-  const newInteraction = `Human: ${human}\nAI: ${ai}`;
-  if (!previousChatHistory) {
-    return newInteraction;
-  }
-  return `${previousChatHistory}\n\n${newInteraction}`;
-};
+var chatHistory: string[] = [""]
 
 export async function POST(req: NextRequest) {
   const formData: FormData = await req.formData();
@@ -82,7 +73,7 @@ export async function POST(req: NextRequest) {
 
 
 export async function GET(req: NextRequest) {
-  const query  = req.nextUrl.searchParams.get('query');
+  const query : string = req.nextUrl.searchParams.get('query') || "";
   console.log(query)
   const llm = new ChatOpenAI();
   const retriever = vectorStore().asRetriever(
@@ -95,12 +86,14 @@ export async function GET(req: NextRequest) {
     "returnMessages": true
   })
 
-  const conversationChain = ConversationalRetrievalQAChain.fromLLM(llm,retriever, memory)
+  const conversationChain = ConversationalRetrievalQAChain.fromLLM(llm,retriever,memory)
   const res = await conversationChain.invoke({
     "question" : query, 
-    "chat_history" : formatChatHistory("my name is Utsav", "sure")
-  })
-  // const mem = formatChatHistory(query, JSON.stringify(res))
-  // console.log(mem)
-  return new NextResponse(JSON.stringify(res))
+    "chat_history": [
+      chatHistory
+    ],
+    })
+  chatHistory.push(query, res.text)
+  console.log(chatHistory)
+  return new NextResponse(JSON.stringify(res.text))
 }
