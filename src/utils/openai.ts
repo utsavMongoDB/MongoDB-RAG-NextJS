@@ -1,9 +1,12 @@
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { MongoDBAtlasVectorSearch, MongoDBAtlasVectorSearchLibArgs } from '@langchain/community/vectorstores/mongodb_atlas';
 import { MongoClient } from "mongodb";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 let embeddingsInstance: OpenAIEmbeddings | null = null;
-const client = new MongoClient(process.env.MONGODB_URI);
+const client = new MongoClient(process.env.MONGODB_URI!);
 const namespace = "rag.data";
 const [dbName, collectionName] = namespace.split(".");
 const collection = client.db(dbName).collection(collectionName);
