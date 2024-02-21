@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 let embeddingsInstance: OpenAIEmbeddings | null = null;
-const client = new MongoClient(process.env.MONGODB_URI!);
+const client = new MongoClient(process.env.NEXT_PUBLIC_MONGODB_URI!);
 const namespace = "rag.data";
 const [dbName, collectionName] = namespace.split(".");
 const collection = client.db(dbName).collection(collectionName);
@@ -19,8 +19,10 @@ export function getEmbeddingsTransformer(): OpenAIEmbeddings {
 }
 
 export function vectorStore(): MongoDBAtlasVectorSearch {
-    const vectorStore: MongoDBAtlasVectorSearch = new MongoDBAtlasVectorSearch(new OpenAIEmbeddings(),
-        searchArgs());
+    const vectorStore: MongoDBAtlasVectorSearch = new MongoDBAtlasVectorSearch(
+        new OpenAIEmbeddings(),
+        searchArgs()
+    );
     return vectorStore
 }
 
