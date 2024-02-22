@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'; 
+import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
-import PDFParser from 'pdf2json'; 
+import PDFParser from 'pdf2json';
 import { getEmbeddingsTransformer, vectorStore, searchArgs } from '@/utils/openai';
 import { MongoDBAtlasVectorSearch } from '@langchain/community/vectorstores/mongodb_atlas';
 import { CharacterTextSplitter } from 'langchain/text_splitter';
@@ -11,68 +11,75 @@ import { BufferWindowMemory } from 'langchain/memory';
 var chatHistory: string[] = [""]
 
 export async function POST(req: NextRequest) {
-  const formData: FormData = await req.formData();
-  const uploadedFiles = formData.getAll('filepond');
-  let fileName = '';
-  let parsedText = '';
+  try {
+    const formData: FormData = await req.formData();
+    const uploadedFiles = formData.getAll('filepond');
+    let fileName = '';
+    let parsedText = '';
 
-  if (uploadedFiles && uploadedFiles.length > 0) {
-    const uploadedFile = uploadedFiles[1];
-    console.log('Uploaded file:', uploadedFile);
+    if (uploadedFiles && uploadedFiles.length > 0) {
+      const uploadedFile = uploadedFiles[1];
+      console.log('Uploaded file:', uploadedFile);
 
-    // Check if uploadedFile is of type File
-    if (uploadedFile instanceof File) {
-      // Generate a unique filename
-      fileName = "uuidv4";
+      // Check if uploadedFile is of type File
+      if (uploadedFile instanceof File) {
+        // Generate a unique filename
+        fileName = "uuidv4";
 
-      // Convert the uploaded file into a temporary file
-      const tempFilePath = `/tmp/${fileName}.pdf`;
+        // Convert the uploaded file into a temporary file
+        const tempFilePath = `/tmp/${fileName}.pdf`;
 
-      // Convert ArrayBuffer to Buffer
-      const fileBuffer = Buffer.from(await uploadedFile.arrayBuffer());
+        // Convert ArrayBuffer to Buffer
+        const fileBuffer = Buffer.from(await uploadedFile.arrayBuffer());
 
-      // Save the buffer as a file
-      await fs.writeFile(tempFilePath, fileBuffer);
+        // Save the buffer as a file
+        await fs.writeFile(tempFilePath, fileBuffer);
 
-      const pdfParser = new (PDFParser as any)(null, 1);
+        const pdfParser = new (PDFParser as any)(null, 1);
 
-      // See pdf2json docs for more info on how the below works.
-      pdfParser.on('pdfParser_dataError', (errData: any) =>
-        console.log(errData.parserError)
-      );
+        // See pdf2json docs for more info on how the below works.
+        pdfParser.on('pdfParser_dataError', (errData: any) =>
+          console.log(errData.parserError)
+        );
 
-      pdfParser.on('pdfParser_dataReady', async () => {
-        parsedText = (pdfParser as any).getRawTextContent();
-        const chunks = await new CharacterTextSplitter({
-          separator: "\n",
-          chunkSize: 1000,
-          chunkOverlap: 100
-        }).splitText(parsedText)
-        console.log(chunks.length)
-        await MongoDBAtlasVectorSearch.fromTexts(
-          chunks, [],
-          getEmbeddingsTransformer(),
-          searchArgs()
-        )
-        console.log("Addded to mongo!")
-      });
+        pdfParser.on('pdfParser_dataReady', async () => {
+          parsedText = (pdfParser as any).getRawTextContent();
+          const chunks = await new CharacterTextSplitter({
+            separator: "\n",
+            chunkSize: 1000,
+            chunkOverlap: 100
+          }).splitText(parsedText)
+          console.log(chunks.length)
+          await MongoDBAtlasVectorSearch.fromTexts(
+            chunks, [],
+            getEmbeddingsTransformer(),
+            searchArgs()
+          )
+          console.log("Addded to mongo!")
+        });
 
-      pdfParser.loadPDF(tempFilePath);
+        pdfParser.loadPDF(tempFilePath);
+      } else {
+        console.log('Uploaded file is not in the expected format.');
+      }
     } else {
-      console.log('Uploaded file is not in the expected format.');
+      console.log('No files found.');
     }
-  } else {
-    console.log('No files found.');
+
+    const response = new NextResponse(parsedText);
+    response.headers.set('FileName', fileName);
+    return response;
+  } catch (error) {
+    console.error('Error processing request:', error);
+    // Handle the error accordingly, for example, return an error response.
+    return new NextResponse("An error occurred during processing.", { status: 500 });
   }
 
-  const response = new NextResponse(parsedText);
-  response.headers.set('FileName', fileName);
-  return response;
 }
 
 
 export async function GET(req: NextRequest) {
-  const query : string = req.nextUrl.searchParams.get('query') || "";
+  const query: string = req.nextUrl.searchParams.get('query') || "";
   console.log(query)
   const llm = new ChatOpenAI();
   const retriever = vectorStore().asRetriever(
@@ -85,13 +92,13 @@ export async function GET(req: NextRequest) {
     "returnMessages": true
   })
 
-  const conversationChain = ConversationalRetrievalQAChain.fromLLM(llm,retriever,memory)
+  const conversationChain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, memory)
   const res = await conversationChain.invoke({
-    "question" : query, 
+    "question": query,
     "chat_history": [
       chatHistory
     ],
-    })
+  })
   chatHistory.push(query, res.text)
   console.log(chatHistory)
   return new NextResponse(JSON.stringify(res.text))
