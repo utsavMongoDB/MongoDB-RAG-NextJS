@@ -10,7 +10,7 @@ import { BufferWindowMemory } from 'langchain/memory';
 
 var chatHistory: string[] = [""]
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
     const formData: FormData = await req.formData();
     const uploadedFiles = formData.getAll('filepond');
