@@ -7,7 +7,6 @@ import { CharacterTextSplitter } from 'langchain/text_splitter';
 import { ConversationalRetrievalQAChain } from 'langchain/chains';
 import { ChatOpenAI } from '@langchain/openai';
 import { BufferWindowMemory } from 'langchain/memory';
-import { AIMessage, HumanMessage } from 'langchain/schema';
 
 var chatHistory: string[] = [""]
 
