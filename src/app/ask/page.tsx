@@ -26,7 +26,7 @@ export default function Home() {
     e.preventDefault();
     console.log("process.env.NEXT_PUBLIC_MONGODB_URI!" , process.env.NEXT_PUBLIC_MONGODB_URI!)
     console.log("process.env.MONGODB_URI!" , process.env.MONGODB_URI!)
-    console.log("OPENAI_API_KEY" , process.env.OPENAI_API_KEY!)
+    console.log("OPENAI_API_KEY" , process.env.NEXT_PUBLIC_OPENAI_API_KEY!)
     if (!newMessage.trim()) return;
 
     const updatedMessages = [...messages, { id: messages.length + 1, sender: 'User', text: newMessage }];
