@@ -1,6 +1,7 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from 'react';
 import NavBar from '../component/navbar';
+import axios from 'axios';
 
 interface Message {
   id: number;
@@ -9,11 +10,21 @@ interface Message {
 }
 
 const getAIResponse = async (userMessage: string): Promise<string> => {
-  // Make the GET request with fetch
-  const response = await fetch('https://mongo-db-rag-next-js.vercel.app/api/?query=' + userMessage);
-  console.log("res : ", response)
-  const aiResponse = await response.json();
-  return aiResponse;
+  try {
+    // Make the GET request with axios
+    const response = await axios.get('/api', {
+      params: {
+        query: userMessage
+      }
+    });
+    console.log("res : ", response);
+    const aiResponse = response.data;
+    return aiResponse;
+  } catch (error) {
+    // Handle errors here
+    console.error('Error fetching AI response:', error);
+    throw error; // You may handle or rethrow the error as per your requirement
+  }
 };
 
 

@@ -3,7 +3,6 @@
 import { FilePond } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
 import NavBar from '../component/navbar';
-import { url } from 'inspector';
 
 export default function Home() {
     return (

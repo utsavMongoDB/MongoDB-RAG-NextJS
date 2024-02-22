@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@langchain/community": "^0.0.30",
+    "axios": "^1.6.7",
     "dotenv": "^16.4.5",
     "filepond": "^4.30.6",
     "langchain": "^0.1.20",
