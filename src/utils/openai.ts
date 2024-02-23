@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 let embeddingsInstance: OpenAIEmbeddings | null = null;
+
 const client = new MongoClient(process.env.MONGODB_URI!);
 const namespace = "rag.data";
 const [dbName, collectionName] = namespace.split(".");
