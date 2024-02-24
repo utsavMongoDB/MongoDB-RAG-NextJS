@@ -80,8 +80,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 export async function GET(req: NextRequest) {
   try {
+    console.log("Request is here")
     const query: string = req.nextUrl.searchParams.get('query') || "";
-    console.log(query)
     const llm = new ChatOpenAI();
     const retriever = vectorStore().asRetriever(
       { searchType: "mmr", searchKwargs: { "fetchK": 10, "lambda": 0.25 } }
