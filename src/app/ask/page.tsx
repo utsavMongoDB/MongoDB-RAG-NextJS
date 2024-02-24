@@ -11,7 +11,7 @@ interface Message {
 
 const getAIResponse = async (userMessage: string): Promise<string> => {
   // Make the GET request with fetch
-  const response = await fetch('/api/?query=' + userMessage, { cache: 'no-store' });
+  const response = await fetch('https://monogodb-rag.vercel.app/api/?query=' + userMessage, { cache: 'no-store' });
   console.log("res : ", response)
   const aiResponse = await response.json();
   return aiResponse;

@@ -10,6 +10,34 @@ import { BufferWindowMemory } from 'langchain/memory';
 
 var chatHistory: string[] = [""]
 
+export default async function handler(
+  req: NextRequest
+) {
+  const query: string = req.nextUrl.searchParams.get('query') || "";
+  console.log(query)
+  const llm = new ChatOpenAI();
+  const retriever = vectorStore().asRetriever(
+    { searchType: "mmr", searchKwargs: { "fetchK": 10, "lambda": 0.25 } }
+  )
+
+  const memory = new BufferWindowMemory({
+    "memoryKey": "chat_history",
+    "k": 5,
+    "returnMessages": true
+  })
+
+  const conversationChain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, memory)
+  const res = await conversationChain.invoke({
+    "question": query,
+    "chat_history": [
+      chatHistory
+    ],
+  })
+  chatHistory.push(query, res.text)
+  console.log(chatHistory)
+  return new NextResponse(JSON.stringify(res.text))
+}
+
 export async function POST(req: Request) {
   try {
     const formData: FormData = await req.formData();
