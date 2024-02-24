@@ -79,27 +79,32 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 
 export async function GET(req: NextRequest) {
-  const query: string = req.nextUrl.searchParams.get('query') || "";
-  console.log(query)
-  const llm = new ChatOpenAI();
-  const retriever = vectorStore().asRetriever(
-    { searchType: "mmr", searchKwargs: { "fetchK": 10, "lambda": 0.25 } }
-  )
+  try {
+    const query: string = req.nextUrl.searchParams.get('query') || "";
+    console.log(query)
+    const llm = new ChatOpenAI();
+    const retriever = vectorStore().asRetriever(
+      { searchType: "mmr", searchKwargs: { "fetchK": 10, "lambda": 0.25 } }
+    )
 
-  const memory = new BufferWindowMemory({
-    "memoryKey": "chat_history",
-    "k": 5,
-    "returnMessages": true
-  })
+    const memory = new BufferWindowMemory({
+      "memoryKey": "chat_history",
+      "k": 5,
+      "returnMessages": true
+    })
 
-  const conversationChain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, memory)
-  const res = await conversationChain.invoke({
-    "question": query,
-    "chat_history": [
-      chatHistory
-    ],
-  })
-  chatHistory.push(query, res.text)
-  console.log(chatHistory)
-  return new NextResponse(JSON.stringify(res.text))
+    const conversationChain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, memory)
+    const res = await conversationChain.invoke({
+      "question": query,
+      "chat_history": [
+        chatHistory
+      ],
+    })
+    chatHistory.push(query, res.text)
+    console.log(chatHistory)
+    return new NextResponse(JSON.stringify(res.text))
+  }
+  catch (e) {
+    console.log("ERROR --- ", e)
+  }
 }
