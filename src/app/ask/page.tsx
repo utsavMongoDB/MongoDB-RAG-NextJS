@@ -17,7 +17,7 @@ const getAIResponse = async (userMessage: string): Promise<string> => {
     return aiResponse;
   }
   catch (e) {
-    return "Error processing!"
+    return "Error processin !"
   }
 };
 
