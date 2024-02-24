@@ -1,4 +1,3 @@
-'use server'
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 // import PDFParser from 'pdf2json';
@@ -84,9 +83,10 @@ var chatHistory: string[] = [""]
 
 
 export async function GET(req: NextRequest) {
+  const query = req.nextUrl.searchParams.get('query') || "";
+
   try {
     console.log("Request is here")
-    const query: string = req.nextUrl.searchParams.get('query') || "";
     const llm = new ChatOpenAI();
     const retriever = vectorStore().asRetriever(
       { searchType: "mmr", searchKwargs: { "fetchK": 10, "lambda": 0.25 } }
