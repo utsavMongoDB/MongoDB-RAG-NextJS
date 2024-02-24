@@ -1,7 +1,6 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from 'react';
 import NavBar from '../component/navbar';
-import axios from 'axios';
 
 interface Message {
   id: number;
@@ -10,11 +9,16 @@ interface Message {
 }
 
 const getAIResponse = async (userMessage: string): Promise<string> => {
-  // Make the GET request with fetch
-  const response = await fetch('https://monogodb-rag.vercel.app/api/?query=' + userMessage, { cache: 'no-store' });
-  console.log("res : ", response)
-  const aiResponse = await response.json();
-  return aiResponse;
+  try {
+    // Make the GET request with fetch
+    const response = await fetch('https://monogodb-rag.vercel.app/api/?query=' + userMessage, { cache: 'no-store' });
+    console.log("res : ", response)
+    const aiResponse = await response.json();
+    return aiResponse;
+  }
+  catch (e) {
+    return "Error processing!"
+  }
 };
 
 
@@ -25,9 +29,9 @@ export default function Home() {
 
   const sendMessage = async (e: FormEvent<HTMLFormElement> | ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log("process.env.NEXT_PUBLIC_MONGODB_URI!" , process.env.NEXT_PUBLIC_MONGODB_URI!)
-    console.log("process.env.MONGODB_URI!" , process.env.MONGODB_URI!)
-    console.log("OPENAI_API_KEY" , process.env.NEXT_PUBLIC_OPENAI_API_KEY!)
+    console.log("process.env.NEXT_PUBLIC_MONGODB_URI!", process.env.NEXT_PUBLIC_MONGODB_URI!)
+    console.log("process.env.MONGODB_URI!", process.env.MONGODB_URI!)
+    console.log("OPENAI_API_KEY", process.env.NEXT_PUBLIC_OPENAI_API_KEY!)
     if (!newMessage.trim()) return;
 
     const updatedMessages = [...messages, { id: messages.length + 1, sender: 'User', text: newMessage }];
@@ -36,10 +40,10 @@ export default function Home() {
     setNewMessage('');
 
     const aiResponse = await getAIResponse(newMessage);
-    const updatedMessagesWithAIResponse = [...updatedMessages, { 
-      id: updatedMessages.length + 1, 
-      sender: 'AI', 
-      text: aiResponse 
+    const updatedMessagesWithAIResponse = [...updatedMessages, {
+      id: updatedMessages.length + 1,
+      sender: 'AI',
+      text: aiResponse
     }];
     setMessages(updatedMessagesWithAIResponse);
 
@@ -65,11 +69,11 @@ export default function Home() {
         <>
           {messages.length == 0 &&
             (
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                  <img style={{ width: "25%", marginBottom: "2%" }} src='/MongoDB_White.svg' />
-                  <span style={{marginBottom: '2%', fontSize: '40px', justifySelf:'center' }}>+</span>
-                  <img style={{ width: "8%", marginBottom: "2%" }} src='/openAI.svg' />
-                </div>
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <img style={{ width: "25%", marginBottom: "2%" }} src='/MongoDB_White.svg' />
+                <span style={{ marginBottom: '2%', fontSize: '40px', justifySelf: 'center' }}>+</span>
+                <img style={{ width: "8%", marginBottom: "2%" }} src='/openAI.svg' />
+              </div>
             )
           }
         </>
