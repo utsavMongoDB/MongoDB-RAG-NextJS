@@ -1,3 +1,4 @@
+'use server'
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 // import PDFParser from 'pdf2json';
