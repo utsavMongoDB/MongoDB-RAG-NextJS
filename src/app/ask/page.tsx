@@ -22,7 +22,7 @@ const getAIResponse = async (userMessage: string): Promise<string> => {
 };
 
 
-export default async function Home() {
+export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [waitingForAI, setWaitingForAI] = useState<Boolean>(false);
