@@ -16,7 +16,6 @@ export async function GET(req: NextRequest) {
   const query = req.nextUrl.searchParams.get('query') || "";
 
   try {
-    console.log("Request is here")
     const llm = new ChatOpenAI();
     const retriever = vectorStore().asRetriever(
       { searchType: "mmr", searchKwargs: { "fetchK": 10, "lambda": 0.25 } }
@@ -50,6 +49,7 @@ export async function POST(req: NextRequest) {
     const uploadedFiles = formData.getAll('filepond');
     let fileName = '';
     let parsedText = '';
+    let uploaded = false;
 
     if (uploadedFiles && uploadedFiles.length > 0) {
       const uploadedFile = uploadedFiles[1];
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
         await fs.writeFile(tempFilePath, fileBuffer);
         let dataBuffer = fs.readFile(tempFilePath);
 
-        pdf(await dataBuffer).then(async function (data: { text: any; }) {
+        await pdf(await dataBuffer).then(async function (data: { text: any; }) {
           console.log(data.text);
           parsedText = data.text;
           const chunks = await new CharacterTextSplitter({
@@ -79,19 +79,20 @@ export async function POST(req: NextRequest) {
             getEmbeddingsTransformer(),
             searchArgs()
           )
-          console.log("Addded to mongo!")
         });
+        uploaded = true;
+        return NextResponse.json({ message: uploaded }, { status: 200 });
 
       } else {
         console.log('Uploaded file is not in the expected format.');
+        return NextResponse.json({ message: 'Uploaded file is not in the expected format' }, { status: 500 });
       }
     } else {
       console.log('No files found.');
+      return NextResponse.json({ message: 'No files found' }, { status: 500 });
+
     }
 
-    const response = new NextResponse(parsedText);
-    response.headers.set('FileName', fileName);
-    return response;
   } catch (error) {
     console.error('Error processing request:', error);
     // Handle the error accordingly, for example, return an error response.
