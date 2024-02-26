@@ -1,4 +1,32 @@
-"use client";
+'use client';
+
+
+// export default function Chat() {
+//   return (
+//     <div className="mx-auto w-full max-w-md py-24 flex flex-col stretch">
+//       {messages.map(m => (
+//         <div key={m.id}>
+//           {m.role === 'user' ? 'User: ' : 'AI: '}
+//           {m.content}
+//         </div>
+//       ))}
+
+//       <form onSubmit={handleSubmit}>
+//         <label>
+//           Say something...
+//           <input
+//             className="fixed w-full max-w-md bottom-0 border border-gray-300 rounded mb-8 shadow-xl p-2"
+//             value={input}
+//             onChange={handleInputChange}
+//           />
+//         </label>
+//         <button type="submit">Send</button>
+//       </form>
+//     </div>
+//   );
+// }
+
+import { useChat } from 'ai/react';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import NavBar from '../component/navbar';
 
@@ -23,15 +51,16 @@ const getAIResponse = async (userMessage: string): Promise<string> => {
 
 
 export default function Home() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messageArray, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [waitingForAI, setWaitingForAI] = useState<Boolean>(false);
+  const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   const sendMessage = async (e: FormEvent<HTMLFormElement> | ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
 
-    const updatedMessages = [...messages, { id: messages.length + 1, sender: 'User', text: newMessage }];
+    const updatedMessages = [...messageArray, { id: messages.length + 1, sender: 'User', text: newMessage }];
     setMessages(updatedMessages);
     setWaitingForAI(true)
     setNewMessage('');
@@ -75,7 +104,7 @@ export default function Home() {
           }
         </>
         <div className="pr-4 messages" style={{ minWidth: '100%', display: 'table' }}>
-          {messages.map((message) => (
+          {/* {messageArray.map((message) => (
             <div key={message.id} className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
               <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8" style={{ margin: '30px', marginTop: '0px' }}>
                 <div className="rounded-full bg-gray-100 border p-1">
@@ -91,14 +120,34 @@ export default function Home() {
                 {message.text}
               </p>
             </div>
+          ))} */}
+
+          {messages.map(m => (
+            <div key={m.id} className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
+              <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8" style={{ margin: '30px', marginTop: '0px' }}>
+                <div className="rounded-full bg-gray-100 border p-1">
+                  {m.role === 'user' ? (
+                    <img src="/user.png" />
+                  ) : (
+                    <img src="/bot.png" />
+                  )}
+                </div>
+              </span>
+              <p className="leading-relaxed" style={{ color: 'aliceblue' }}>
+                <span className="block font-bold">{m.role}</span>
+                {m.content}
+              </p>
+            </div>
           ))}
+
         </div>
 
         <div className="flex items-center pt-0 chat-window">
-          <form className="flex items-center justify-center w-full space-x-2" onSubmit={sendMessage}>
+          <form className="flex items-center justify-center w-full space-x-2" onSubmit={handleSubmit}>
             <input
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
+              value={input}
+              onChange={handleInputChange}
+              // onChange={(e) => setNewMessage(e.target.value)}
               className="flex h-10 w-full rounded-md border border-[#e5e7eb] px-3 py-2 text-sm placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-[#9ca3af] disabled:cursor-not-allowed disabled:opacity-50 text-[#030712] focus-visible:ring-offset-2"
               placeholder="Ask what you have in mind"
             />
