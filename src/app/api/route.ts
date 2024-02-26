@@ -3,7 +3,6 @@ import { promises as fs } from 'fs';
 // import PDFParser from 'pdf2json';
 import pdf from "pdf-parse";
 
-
 import { getEmbeddingsTransformer, vectorStore, searchArgs } from '@/utils/openai';
 import { MongoDBAtlasVectorSearch } from '@langchain/community/vectorstores/mongodb_atlas';
 import { CharacterTextSplitter } from 'langchain/text_splitter';
@@ -57,7 +56,7 @@ export async function POST(req: NextRequest) {
       console.log('Uploaded file:', uploadedFile);
 
       if (uploadedFile instanceof File) {
-        fileName = "uuidv4";
+        fileName = uploadedFile.name.toLowerCase();
 
         const tempFilePath = `/tmp/${fileName}.pdf`;
 
