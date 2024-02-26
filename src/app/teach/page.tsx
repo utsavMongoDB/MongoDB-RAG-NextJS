@@ -10,7 +10,7 @@ export default function Home() {
             <NavBar />
             <div className='flex-col items-center justify-between p-24'>
                 <FilePond
-                    server={'https://monogodb-rag.vercel.app/api'}
+                    server={'/api'}
                 />
             </div>
         </main>
