@@ -48,7 +48,7 @@ export function vectorStore(): MongoDBAtlasVectorSearch {
 export function searchArgs(): MongoDBAtlasVectorSearchLibArgs {
     const searchArgs: MongoDBAtlasVectorSearchLibArgs = {
         collection,
-        indexName: "default",
+        indexName: "vector_index",
         textKey: "line",
         embeddingKey: "vec",
     }

@@ -1,51 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
-// import PDFParser from 'pdf2json';
 import pdf from "pdf-parse";
-import { OpenAIStream, StreamingTextResponse } from 'ai'
 
-import { getEmbeddingsTransformer, vectorStore, searchArgs } from '@/utils/openai';
+import { getEmbeddingsTransformer, searchArgs } from '@/utils/openai';
 import { MongoDBAtlasVectorSearch } from '@langchain/community/vectorstores/mongodb_atlas';
 import { CharacterTextSplitter } from 'langchain/text_splitter';
-import { ConversationalRetrievalQAChain } from 'langchain/chains';
-import { ChatOpenAI } from '@langchain/openai';
-import { BufferWindowMemory } from 'langchain/memory';
-import { Stream } from 'stream';
 
 var chatHistory: string[] = [""]
 
-export async function GET(req: NextRequest) {
-  const query = req.nextUrl.searchParams.get('query') || "";
-
-  try {
-    const llm = new ChatOpenAI({ streaming: true });
-
-    const retriever = vectorStore().asRetriever(
-      { searchType: "mmr", searchKwargs: { "fetchK": 10, "lambda": 0.25 } }
-    )
-
-    const memory = new BufferWindowMemory({
-      "memoryKey": "chat_history",
-      "k": 5,
-      "returnMessages": true
-    })
-
-    const conversationChain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, memory)
-
-    const response = await conversationChain.invoke({
-      "question": query, "chat_history": [
-        chatHistory
-      ],
-    });
-
-    // chatHistory.push(query, res.text)
-    return new NextResponse(JSON.stringify(response))
-    // return new StreamingTextResponse(response)
-  }
-  catch (e) {
-    console.log("ERROR --- ", e)
-  }
-}
 
 export async function POST(req: NextRequest) {
   try {
