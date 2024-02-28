@@ -1,24 +1,22 @@
 'use client';
 
 import { FilePond } from 'react-filepond';
-import 'filepond/dist/filepond.min.css';
 import NavBar from '../component/navbar';
-import { useState } from 'react';
-import { NextRequest } from 'next/server';
+import 'filepond/dist/filepond.min.css';
 
 export default function Home() {
-   
+
     return (
         <main>
             <NavBar />
             <div className='flex-col items-center justify-between p-24'>
                 <FilePond
                     server={{
-                        url : "/api",
+                        url: "/api/upload",
                         process: {
                             url: "/",
                             onload: (response) => {
-                                console.log("res - ", response)
+                                console.log(response)
                                 return response
                             }
                         }

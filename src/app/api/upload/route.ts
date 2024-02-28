@@ -13,9 +13,9 @@ export async function POST(req: NextRequest) {
     const uploadedFiles = formData.getAll('filepond');
     let fileName = '';
     let parsedText = '';
-    let uploaded = false;
 
     if (uploadedFiles && uploadedFiles.length > 0) {
+      // Parse the data from uploaded file 
       const uploadedFile = uploadedFiles[1];
       console.log('Uploaded file:', uploadedFile);
 
@@ -23,7 +23,6 @@ export async function POST(req: NextRequest) {
         fileName = uploadedFile.name.toLowerCase();
 
         const tempFilePath = `/tmp/${fileName}.pdf`;
-
         const fileBuffer = Buffer.from(await uploadedFile.arrayBuffer());
 
         await fs.writeFile(tempFilePath, fileBuffer);
@@ -31,21 +30,24 @@ export async function POST(req: NextRequest) {
 
         await pdf(await dataBuffer).then(async function (data: { text: any; }) {
           console.log(data.text);
+          // Collect the parsed data from the PDF file
           parsedText = data.text;
+
+          // Spread data into chunks 
           const chunks = await new CharacterTextSplitter({
             separator: "\n",
             chunkSize: 1000,
             chunkOverlap: 100
           }).splitText(parsedText)
           console.log(chunks.length)
+
+          // Convert chunks to Vectors and store into MongoDB
           await MongoDBAtlasVectorSearch.fromTexts(
             chunks, [],
             getEmbeddingsTransformer(),
             searchArgs()
-          )
-        });
-        uploaded = true
-        return NextResponse.json({ message: uploaded }, { status: 200 });
+          )});
+        return NextResponse.json({ message: "Uploaded to MongoDB" }, { status: 200 });
 
       } else {
         console.log('Uploaded file is not in the expected format.');
