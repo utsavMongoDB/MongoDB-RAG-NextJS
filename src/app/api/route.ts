@@ -6,8 +6,6 @@ import { getEmbeddingsTransformer, searchArgs } from '@/utils/openai';
 import { MongoDBAtlasVectorSearch } from '@langchain/community/vectorstores/mongodb_atlas';
 import { CharacterTextSplitter } from 'langchain/text_splitter';
 
-var chatHistory: string[] = [""]
-
 
 export async function POST(req: NextRequest) {
   try {

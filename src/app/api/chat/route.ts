@@ -24,7 +24,7 @@ export async function POST(req: Request) {
             temperature: 0.8,
             streaming: true,
             callbacks: [handlers],
-        });
+        }); 
 
         const retriever = vectorStore().asRetriever({ 
             "searchType": "mmr", searchKwargs: { "fetchK": 10, "lambda": 0.25 } })

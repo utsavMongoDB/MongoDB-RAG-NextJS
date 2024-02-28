@@ -1,7 +1,7 @@
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { MongoDBAtlasVectorSearch, MongoDBAtlasVectorSearchLibArgs } from '@langchain/community/vectorstores/mongodb_atlas';
 import { MongoClient } from "mongodb";
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config();
 
 let embeddingsInstance: OpenAIEmbeddings | null = null;
