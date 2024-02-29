@@ -1,1 +1,1 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/utsavMongoDB/MongoDB_RAG_NextJS)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FutsavMongoDB%2FMongoDB_RAG_NextJS&env=OPENAI_API_KEY,MONGODB_URI&demo-title=RAG%20with%20MongoDB%20Atlas%20and%20OpenAI&demo-url=https%3A%2F%2Fmonogodb-rag.vercel.app%2F&integration-ids=icfg_HrT3njxoRY5cAUg3TesLbUaF)
