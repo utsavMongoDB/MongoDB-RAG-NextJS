@@ -25,5 +25,33 @@ This architecture depicts a Retrieval-Augmented Generation (RAG) chatbot system 
 This RAG-based architecture seamlessly integrates retrieval and generation. It retrieves the most relevant knowledge from the database and utilizes OpenAI's language processing capabilities to deliver informative and insightful answers to user queries.
 
 
-### Demo 
-<img width="1182" alt="image" src="https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/bad06c66-70b1-42bd-bd27-9634eaf29f01">
+## Implementation 
+
+The below components are used to build up the bot, which can retrieve the required information from the vector store, feed it to the chain and stream responses to the client.
+
+#### LLM Model 
+
+        const model = new ChatOpenAI({
+            temperature: 0.8,
+            streaming: true,
+            callbacks: [handlers],
+        });
+
+
+#### Vector Store
+
+        const retriever = vectorStore().asRetriever({ 
+            "searchType": "mmr", 
+            "searchKwargs": { "fetchK": 10, "lambda": 0.25 } 
+        })
+
+#### Chain
+
+       const conversationChain = ConversationalRetrievalQAChain.fromLLM(model, retriever, {
+            memory: new BufferMemory({
+              memoryKey: "chat_history",
+            }),
+          })
+        conversationChain.invoke({
+            "question": question
+        })
