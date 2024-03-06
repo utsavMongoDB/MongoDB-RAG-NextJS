@@ -2,8 +2,9 @@
 # RAG Based Chat-bot using Langchain and MongoDB Atlas
 This starter template implements a Retrieval-Augmented Generation (RAG) chatbot using LangChain and MongoDB Atlas. RAG combines AI language generation with knowledge retrieval for more informative responses. LangChain simplifies building the chatbot logic, while MongoDB Atlas' Vector database capability provides a powerful platform for storing and searching the knowledge base that fuels the chatbot's responses.
 
-#### Deploy your version on Vercel               
+#### Deploy your versions on PaaS               
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FutsavMongoDB%2FMongoDB-RAG-NextJS&env=OPENAI_API_KEY,MONGODB_URI&demo-title=RAG%20with%20MongoDB%20Atlas%20and%20OpenAI&demo-url=https%3A%2F%2Fmonogodb-rag.vercel.app%2F&integration-ids=oac_jnzmjqM10gllKmSrG0SGrHOH)
+[![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/utsavMongoDB/MongoDB-RAG-NextJS&env=OPENAI_API_KEY,MONGODB_URI)
 
 
 ## Reference Architechture 
