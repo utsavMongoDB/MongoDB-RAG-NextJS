@@ -12,7 +12,7 @@ export default function Home() {
             <div className='flex-col items-center justify-between p-24'>
                 <FilePond
                     server={{
-                        url: "/api/upload"
+                        url: "/api/`upload`"
                     }}
                 />
             </div>
