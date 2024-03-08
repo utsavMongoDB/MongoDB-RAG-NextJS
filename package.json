@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@langchain/community": "^0.0.30",
+    "@langchain/community": "0.0.30",
     "@langchain/openai": "^0.0.16",
     "ai": "^2.2.36",
     "axios": "^1.6.7",
