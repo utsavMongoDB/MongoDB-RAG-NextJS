@@ -7,6 +7,9 @@ This starter template implements a Retrieval-Augmented Generation (RAG) chatbot 
 [![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/utsavMongoDB/MongoDB-RAG-NextJS&env=OPENAI_API_KEY,MONGODB_URI)
 
 
+## Setup 
+
+
 ## Reference Architechture 
 
 ![Ref. Arch (1)](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/35caff96-0d7a-447c-95a7-b96910528b48)

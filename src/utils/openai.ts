@@ -49,8 +49,8 @@ export function searchArgs(): MongoDBAtlasVectorSearchLibArgs {
     const searchArgs: MongoDBAtlasVectorSearchLibArgs = {
         collection,
         indexName: "vector_index",
-        textKey: "line",
-        embeddingKey: "vec",
+        textKey: process.env.FIELD_KEY,
+        embeddingKey: process.env.EMBEDDING_KEY,
     }
     return searchArgs;
 }
