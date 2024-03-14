@@ -9,6 +9,41 @@ This starter template implements a Retrieval-Augmented Generation (RAG) chatbot 
 
 
 ## Setup 
+#### Prerequisites
+
+Before you begin, make sure you have the following installed on your system:
+
+- Node.js (https://nodejs.org/)
+- npm (Node Package Manager, comes with Node.js)
+- Git (https://git-scm.com/)
+
+### Steps to Deploy
+
+#### Step 1: Clone the Repository
+
+Clone your ReactJS application repository to your local machine using Git:
+
+```
+git clone <repository-url>
+```
+
+
+#### Step 2: Install Dependencies
+
+Navigate to your project directory and install dependencies using npm:
+
+```
+cd <project-directory>
+npm install
+```
+
+
+#### Step 2: Serve Locally
+
+Start running the application locally.
+```
+npm run dev
+```
 
 
 ## Reference Architechture 
