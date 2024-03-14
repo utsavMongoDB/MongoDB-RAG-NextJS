@@ -9,19 +9,28 @@ This starter template implements a Retrieval-Augmented Generation (RAG) chatbot 
 
 
 ## Setup 
-#### Prerequisites
+### Prerequisites
 
 Before you begin, make sure you have the following installed on your system:
 
-- Node.js (https://nodejs.org/)
-- npm (Node Package Manager, comes with Node.js)
-- Git (https://git-scm.com/)
+- **MongoDB Atlas URI**: Setup your account if you don't already have one ([Create Account](https://www.mongodb.com/docs/guides/atlas/account/))
+  
+- Create **vector embeddings** for your data ([Blog](https://www.mongodb.com/developer/products/atlas/building-generative-ai-applications-vector-search-open-source-models/))
+  
+- **Node.js** (https://nodejs.org/)
+   - npm (Node Package Manager, comes with Node.js)
+     
+- **Git** (https://git-scm.com/)
+  
+- **OpenAI API Key** (https://platform.openai.com/api-keys)
+
+
 
 ### Steps to Deploy
 
 #### Step 1: Clone the Repository
 
-Clone your ReactJS application repository to your local machine using Git:
+- Clone this repository to your local machine using Git:
 
 ```
 git clone <repository-url>
@@ -30,17 +39,27 @@ git clone <repository-url>
 
 #### Step 2: Install Dependencies
 
-Navigate to your project directory and install dependencies using npm:
+- Navigate to your project directory and install dependencies using npm:
 
 ```
 cd <project-directory>
 npm install
 ```
 
+#### Step 3: Add Environment Variables
 
-#### Step 2: Serve Locally
+- Create a `.env.local` in the parent folder and add the below environment variables, so you can run the application:
 
-Start running the application locally.
+````
+OPENAI_API_KEY = "<YOUR_OPENAI_KEY>"              # API Key copied from the OpenAI portal
+MONGODB_URI = "<YOUR_MONGODB_URI>"                # Connection URI to MongoDB Instance
+FIELD_KEY = "<YOUR_DATA_FIELD>"                   # The data field on which you created vectors.
+EMBEDDING_KEY = "<FIELD_EMBEDDING_FIELD>"         # The field with vectorized data information.
+````
+
+#### Step 3: Serve Locally
+
+- Start running the application locally.
 ```
 npm run dev
 ```
