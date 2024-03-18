@@ -15,7 +15,7 @@ Before you begin, make sure you have the following installed on your system:
 
 - **MongoDB Atlas URI**: Setup your account if you don't already have one ([Create Account](https://www.mongodb.com/docs/guides/atlas/account/))
   
-- Create **vector embeddings** for your data ([Blog](https://www.mongodb.com/developer/products/atlas/building-generative-ai-applications-vector-search-open-source-models/))
+- Create **vector embeddings** for your data ([Github Repo](https://github.com/phil2211/vector-search-demo))
   
 - **Node.js** (https://nodejs.org/)
    - npm (Node Package Manager, comes with Node.js)
@@ -26,7 +26,8 @@ Before you begin, make sure you have the following installed on your system:
 
 
 
-### Steps to Deploy
+### Steps to Deploy Locally
+Follow the below mentioned steps to run the app on your local machine. Alternatively you can deploy it on PaaS platforms as well.
 
 #### Step 1: Clone the Repository
 
