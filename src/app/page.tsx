@@ -6,12 +6,28 @@ const Home = () => {
   return (
     <div>
       <NavBar />
-      <p className='overview-text'>
-        In this application, the implementation of a RAG (Retrieval-Augmented Generation) use-case is enhanced by leveraging the robust vector store capabilities of MongoDB. The vector store feature allows the storage of data in a vectorized format, optimizing the retrieval and manipulation of information. MongoDB&apos;s vector store enables efficient handling of complex data structures, making it an ideal choice for scenarios where the RAG model relies on intricate relationships and patterns within the dataset.
-        By utilizing MongoDB&apos;s vector store, the application gains the ability to store and retrieve vector representations of textual data, facilitating quick and accurate comparisons. This proves particularly advantageous for constructing QnAs (Questions and Answers) based on the stored information. The vector store efficiently organizes and indexes data, streamlining the process of generating responses and insights from the RAG model.
-        Moreover, MongoDB&apos;s scalability and flexibility contribute to the adaptability of the application, accommodating the evolving nature of the dataset and ensuring optimal performance even as the data volume increases. Ultimately, the integration of MongoDB&apos;s vector store capabilities elevates the application&apos;s efficiency, enabling a seamless and powerful implementation of the RAG use-case with enhanced capabilities for data storage and QnA generation.
-      </p>
+      <div className='overview-text'>
+
+        <h1 style={{ fontWeight: 'bold', fontSize: '2em' }}>RAG QnA Chatbot</h1>
+        <br />
+        
+        <p>With this RAG (Retrieval-Augmented Generation) application, you can quickly deploy a chatbot that is enhanced by your own data. By simply uploading any PDF file(s) of your choosing, you will be creating your own custom Questions and Answers (QnA) chatbot.</p>
+        <br />
+
+        <h2 style={{ fontStyle: 'italic' }}>Getting Started</h2>
+        <ul>
+          <li>Navigate to the "Train" tab above.</li>
+          <li>Here you can upload any number of PDF files you wish to ask the chatbot about, or that you wish the chatbot would consider when providing an answer.</li>
+          <li>After uploading your files, navigate to "QnA" tab.</li>
+          <li>In the prompt, you can now ask questions about the uploaded PDF files in natural language, and receive a response.</li>
+        </ul>
+
+        <br />
+        <p>This application leverages MongoDB's robust vector store capabilities. Each uploaded PDF is embedded in a vectorized format into your MongoDB Atlas cluster. The vector store efficiently organizes and indexes data, streamlining the process of generating responses and insights from the RAG model.</p>
+
+      </div>
     </div>
+
   )
 }
 

@@ -5,7 +5,7 @@ const NavBar: React.FC = () => {
 
   return (
     <nav style={{ backgroundColor: '#00684A', padding: '1rem' }}>
-      <ul style={{ listStyleType: 'none', margin: 10, padding: 0 }}>
+      <ol style={{ listStyleType: 'none', margin: 10, padding: 0 }}>
         <img src='/mongoDB.svg' width={"1%"} style={{ display: 'inline', marginLeft: '1rem' }} />
         <li style={{ display: 'inline', marginLeft: '5rem' }}>
           <Link href="/">
@@ -22,7 +22,7 @@ const NavBar: React.FC = () => {
             Train
           </Link>
         </li>
-      </ul>
+      </ol>
     </nav>
   );
 };

@@ -7,8 +7,10 @@ dotenv.config();
 let embeddingsInstance: OpenAIEmbeddings | null = null;
 
 const client = new MongoClient(process.env.MONGODB_URI!);
-const namespace = "rag.data";
+const namespace = "chatter.traing_data";
 const [dbName, collectionName] = namespace.split(".");
+// const dbName = process.env.DB_NAME!;
+// const collectionName = process.env.COLL_NAME!;
 const collection = client.db(dbName).collection(collectionName);
 
 export function getEmbeddingsTransformer(): OpenAIEmbeddings {
@@ -49,8 +51,8 @@ export function searchArgs(): MongoDBAtlasVectorSearchLibArgs {
     const searchArgs: MongoDBAtlasVectorSearchLibArgs = {
         collection,
         indexName: "vector_index",
-        textKey: process.env.FIELD_KEY,
-        embeddingKey: process.env.EMBEDDING_KEY,
+        textKey: "text",
+        embeddingKey: "text_embedding",
     }
     return searchArgs;
 }
