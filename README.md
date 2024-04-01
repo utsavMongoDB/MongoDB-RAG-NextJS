@@ -2,12 +2,6 @@
 # RAG Based Chat-bot using Langchain and MongoDB Atlas
 This starter template implements a Retrieval-Augmented Generation (RAG) chatbot using LangChain and MongoDB Atlas. RAG combines AI language generation with knowledge retrieval for more informative responses. LangChain simplifies building the chatbot logic, while MongoDB Atlas' Vector database capability provides a powerful platform for storing and searching the knowledge base that fuels the chatbot's responses.
 
-#### Deploy your versions on PaaS               
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FutsavMongoDB%2FMongoDB-RAG-NextJS&env=OPENAI_API_KEY,FIELD_KEY,EMBEDDING_KEY&demo-title=RAG%20with%20MongoDB%20Atlas%20and%20OpenAI&demo-url=https%3A%2F%2Fmonogodb-rag.vercel.app%2F&integration-ids=oac_jnzmjqM10gllKmSrG0SGrHOH)
-
-[![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/utsavMongoDB/MongoDB-RAG-NextJS&env=OPENAI_API_KEY,MONGODB_URI)
-
-
 ## Setup 
 ### Prerequisites
 
@@ -26,44 +20,54 @@ Before you begin, make sure you have the following installed on your system:
 
 
 
-### Steps to Deploy Locally
-Follow the below mentioned steps to run the app on your local machine. Alternatively you can deploy it on PaaS platforms as well.
+## Steps to Deploy 
+Follow the below-mentioned steps to deploy the app on Vercel.
 
-#### Step 1: Clone the Repository
+#### Step 1: Click the below button to navigate to the Vercel deployment page
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FutsavMongoDB%2FMongoDB-RAG-NextJS&env=OPENAI_API_KEY,MONGODB_URI&demo-title=RAG%20with%20MongoDB%20Atlas%20and%20OpenAI&demo-url=https%3A%2F%2Fmonogodb-rag.vercel.app%2F)
 
-- Clone this repository to your local machine using Git:
+#### Step 2: Add Environment Variables
 
-```
-git clone <repository-url>
-```
-
-
-#### Step 2: Install Dependencies
-
-- Navigate to your project directory and install dependencies using npm:
-
-```
-cd <project-directory>
-npm install
-```
-
-#### Step 3: Add Environment Variables
-
-- Create a `.env.local` in the parent folder and add the below environment variables, so you can run the application:
+Populate the values of the ENV variables mentioned below
 
 ````
 OPENAI_API_KEY = "<YOUR_OPENAI_KEY>"              # API Key copied from the OpenAI portal
 MONGODB_URI = "<YOUR_MONGODB_URI>"                # Connection URI to MongoDB Instance
-FIELD_KEY = "<YOUR_DATA_FIELD>"                   # The data field on which you created vectors.
-EMBEDDING_KEY = "<FIELD_EMBEDDING_FIELD>"         # The field with vectorized data information.
 ````
 
-#### Step 3: Serve Locally
+#### Step 3: Deploy
+Once you have updated the above values, go ahead and click deploy to deploy the app. Wait for the app to be deployed and start serving traffic.
 
-- Start running the application locally.
-```
-npm run dev
-```
+
+#### Step 4: Upload PDF files to create chunks
+Head to the `Train` tab and upload a PDF document. 
+
+If everything is deployed correctly, your document should start uploading to your cluster under the `chatter > training_data` collection.
+
+Your data should now start appearing as below in the collection.
+
+![image](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/316af753-8f7b-492f-b51a-c23c109a3fac)
+
+
+
+#### Step 5: Create Vector Index on Atlas
+Now for the RAG (QnA) to work, you need to create a Vector Search Index on Atlas so the vector data can be fetched and served to LLMs.
+
+Create a search index as below.
+
+- Let’s head over to our MongoDB Atlas user interface to create our Vector Search Index. First, click on the “Search” tab and then on “Create Search Index.” You’ll be taken to this page (shown below). Please click on “JSON Editor.”
+ ![image](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/b41a09a8-9875-4e5d-9549-e62652389d33)
+
+- Next input the values as shown in the below image and create the Vector.
+  ![image](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/bef3df21-2e1e-4443-9c01-e5f31cc9a61b)
+
+- You should start seeing a vector index getting created. You should get an email once index creation is completed.
+  ![image](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/c1842069-4080-4251-8269-08d9398e09aa)
+
+- Once completed, head to the QnA section to start asking questions based on your trained data, and you should get the desired response.
+
+  ![image](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/c76c8c19-e18a-46b1-834a-9a6bda7fec99)
+
 
 
 ## Reference Architechture 
