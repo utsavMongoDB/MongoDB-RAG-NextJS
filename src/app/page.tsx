@@ -16,15 +16,15 @@ const Home = () => {
 
         <h2 style={{ fontStyle: 'italic' }}>Getting Started</h2>
         <ul>
-          <li>Navigate to the "Train" tab above.</li>
+          <li>Navigate to the &ldquo;Train&rdquo; tab above.</li>
           <li>Here you can upload any number of PDF files you wish to ask the chatbot about, or that you wish the chatbot would consider when providing an answer.</li>
-          <li>After uploading your files, navigate to "QnA" tab.</li>
+          <li>After uploading your files, navigate to &ldquo;QnA&rdquo; tab.</li>
           <li>In the prompt, you can now ask questions about the uploaded PDF files in natural language, and receive a response.</li>
         </ul>
 
         <br />
-        <p>This application leverages MongoDB's robust vector store capabilities. Each uploaded PDF is embedded in a vectorized format into your MongoDB Atlas cluster. The vector store efficiently organizes and indexes data, streamlining the process of generating responses and insights from the RAG model.</p>
 
+        <p>This application leverages MongoDB&apos;s robust vector store capabilities. Each uploaded PDF is embedded in a vectorized format into your MongoDB Atlas cluster. The vector store efficiently organizes and indexes data, streamlining the process of generating responses and insights from the RAG model.</p>
       </div>
     </div>
 
