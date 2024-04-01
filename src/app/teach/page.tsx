@@ -9,8 +9,10 @@ export default function Home() {
     return (
         <main>
             <NavBar />
-            <div className='flex-col items-center justify-between p-24'>
-                <FilePond
+            <div className='items-center justify-between p-24'>
+                <FilePond 
+                    allowMultiple={false}
+                    credits={false}
                     server={{
                         url: "/api/upload"
                     }}
