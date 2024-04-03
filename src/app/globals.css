@@ -47,6 +47,8 @@ body {
   margin-top: 3%; 
   padding-left: 10%;
   padding-right: 10%;
+  display: block;
+  overflow: auto;
 }
 
 .chat-window {

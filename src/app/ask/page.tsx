@@ -36,10 +36,11 @@ export default function Home() {
             )
           }
         </>
-        <div className="pr-4 messages" style={{ minWidth: '100%', display: 'table' }}>
+        <div className="pr-4 messages">
           {messages.map(m => (
             <div key={m.id} className="flex gap-3 my-4 text-gray-600 text-sm flex-1">
-              <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8" style={{ margin: '30px', marginTop: '0px' }}>
+              <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8" 
+                    style={{ margin: '30px', marginTop: '0px' }}>
                 <div className="rounded-full bg-gray-100 border p-1">
                   {m.role === 'user' ? (
                     <img src="/user.png" />
