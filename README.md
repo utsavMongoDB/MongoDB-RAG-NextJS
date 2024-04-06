@@ -5,15 +5,10 @@ This starter template implements a Retrieval-Augmented Generation (RAG) chatbot 
 ## Setup 
 ### Prerequisites
 
-Before you begin, make sure you have the following installed on your system:
+Before you begin, make sure you have the following ready:
 
 - **MongoDB Atlas URI**: Setup your account if you don't already have one ([Create Account](https://www.mongodb.com/docs/guides/atlas/account/))
     
-- **Node.js** (https://nodejs.org/)
-   - npm (Node Package Manager, comes with Node.js)
-     
-- **Git** (https://git-scm.com/)
-  
 - **OpenAI API Key** (https://platform.openai.com/api-keys)
 
 
