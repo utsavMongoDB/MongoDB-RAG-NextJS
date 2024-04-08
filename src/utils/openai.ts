@@ -7,7 +7,7 @@ dotenv.config();
 let embeddingsInstance: OpenAIEmbeddings | null = null;
 
 const client = new MongoClient(process.env.MONGODB_URI!);
-const namespace = "chatter.traing_data";
+const namespace = "chatter.training_data";
 const [dbName, collectionName] = namespace.split(".");
 // const dbName = process.env.DB_NAME!;
 // const collectionName = process.env.COLL_NAME!;
