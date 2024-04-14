@@ -52,7 +52,7 @@ Create a search index as below.
  ![image](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/b41a09a8-9875-4e5d-9549-e62652389d33)
 
 - Next input the values as shown in the below image and create the Vector.
-  ![image](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/ea1c8fa9-d391-40e6-b838-7a49fdf6bbd7)
+![image](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/d7e560b3-695c-4210-8a6d-ea50c589bc70)
 
 - You should start seeing a vector index getting created. You should get an email once index creation is completed.
   ![image](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/c1842069-4080-4251-8269-08d9398e09aa)
@@ -65,7 +65,7 @@ Create a search index as below.
 
 ## Reference Architechture 
 
-![Ref. Arch (1)](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/35caff96-0d7a-447c-95a7-b96910528b48)
+![image](https://github.com/utsavMongoDB/MongoDB-RAG-NextJS/assets/114057324/85ce551b-c6b2-43d6-bc4c-bc4df374142d)
 
 
 This architecture depicts a Retrieval-Augmented Generation (RAG) chatbot system built with LangChain, OpenAI, and MongoDB Atlas Vector Search. Let's break down its key players:
